@@ -1,8 +1,10 @@
 class Api::V1::StoresController < ApplicationController
   before_action :set_store, only: [:show]
 
-  def def index
-    @stores = Store.all
+  def index
+    @stores = Store.within(params[:longitude].to_f,params[:latitude].to_f)
+      .sort_by { |store| store.rating_average }
+      .reverse
   end
   
 
